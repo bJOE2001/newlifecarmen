@@ -92,7 +92,7 @@ export default async function HomePage() {
           {/* Service Times Badge */}
           <div className="inline-flex items-center gap-2 px-4 py-2 bg-black/30 backdrop-blur-md border border-white/20 rounded-full mb-8 animate-fade-in">
             <Clock size={14} className="text-white/80" aria-hidden="true" />
-            <span className="text-sm text-white/90">Sunday Worship Celebration — 9:00 AM</span>
+            <span className="text-sm text-white/90">Sunday Worship Celebration — 8:00 AM</span>
           </div>
 
           {/* Main Heading — Crisp Pure White for Maximum Readability */}
