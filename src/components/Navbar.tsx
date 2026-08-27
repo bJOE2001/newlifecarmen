@@ -108,55 +108,46 @@ export default function Navbar() {
         </button>
       </nav>
 
-      {/* Mobile Drawer */}
+      {/* Mobile Menu Panel */}
       <div
-        className={`lg:hidden fixed inset-0 top-16 z-40 transition-all duration-300 ${
-          isOpen ? 'opacity-100 visible' : 'opacity-0 invisible pointer-events-none'
+        className={`lg:hidden fixed inset-x-0 top-16 bottom-0 z-50 bg-white transition-all duration-300 ease-in-out flex flex-col justify-between overflow-y-auto ${
+          isOpen
+            ? 'opacity-100 translate-y-0 pointer-events-auto visible'
+            : 'opacity-0 -translate-y-4 pointer-events-none invisible'
         }`}
+        style={{ backgroundColor: '#ffffff', minHeight: 'calc(100dvh - 4rem)' }}
       >
-        {/* Overlay */}
-        <div className="absolute inset-0 bg-navy/20 backdrop-blur-sm" onClick={() => setIsOpen(false)} />
+        <div className="p-6 flex flex-col gap-1">
+          {navLinks.map((link) => (
+            <Link
+              key={link.href}
+              href={link.href}
+              onClick={() => setIsOpen(false)}
+              className="flex items-center justify-between px-4 py-3.5 text-base font-semibold text-navy hover:text-forest rounded-xl hover:bg-forest-50 active:bg-forest-100 transition-all duration-200"
+            >
+              <span>{link.label}</span>
+              <ChevronRight size={18} className="text-navy-600" aria-hidden="true" />
+            </Link>
+          ))}
+        </div>
 
-        {/* Drawer Panel */}
-        <div
-          className={`absolute right-0 top-0 bottom-0 w-[280px] bg-white shadow-2xl transform transition-transform duration-300 ${
-            isOpen ? 'translate-x-0' : 'translate-x-full'
-          }`}
-        >
-          <div className="flex flex-col h-full p-6">
-            <div className="flex flex-col gap-1">
-              {navLinks.map((link) => (
-                <Link
-                  key={link.href}
-                  href={link.href}
-                  onClick={() => setIsOpen(false)}
-                  className="flex items-center justify-between px-4 py-3 text-base font-medium text-navy-600 hover:text-navy rounded-xl hover:bg-navy/5 transition-all duration-200"
-                >
-                  {link.label}
-                  <ChevronRight size={16} className="text-text-muted" aria-hidden="true" />
-                </Link>
-              ))}
-            </div>
-
-            <div className="mt-auto pt-6 flex flex-col gap-3 border-t border-border">
-              <Link
-                href="/plan-your-visit"
-                onClick={() => setIsOpen(false)}
-                className="flex items-center justify-center gap-2 w-full py-3 text-sm font-semibold text-navy border-2 border-navy/15 rounded-xl hover:bg-navy/5 transition-all duration-200 cursor-pointer"
-              >
-                <MapPin size={16} aria-hidden="true" />
-                Plan a Visit
-              </Link>
-              <Link
-                href="/give"
-                onClick={() => setIsOpen(false)}
-                className="flex items-center justify-center gap-2 w-full py-3 text-sm font-semibold text-white bg-forest hover:bg-forest-dark rounded-xl shadow-md transition-all duration-200 cursor-pointer"
-              >
-                <Heart size={16} aria-hidden="true" />
-                Give
-              </Link>
-            </div>
-          </div>
+        <div className="p-6 pt-4 flex flex-col gap-3 border-t border-border bg-white mt-auto" style={{ backgroundColor: '#ffffff' }}>
+          <Link
+            href="/plan-your-visit"
+            onClick={() => setIsOpen(false)}
+            className="flex items-center justify-center gap-2 w-full py-3.5 text-sm font-bold text-navy border-2 border-navy/20 rounded-xl hover:bg-navy/5 active:scale-[0.98] transition-all duration-200 cursor-pointer"
+          >
+            <MapPin size={16} aria-hidden="true" />
+            Plan a Visit
+          </Link>
+          <Link
+            href="/give"
+            onClick={() => setIsOpen(false)}
+            className="flex items-center justify-center gap-2 w-full py-3.5 text-sm font-bold text-white bg-forest hover:bg-forest-dark rounded-xl shadow-md shadow-forest/20 active:scale-[0.98] transition-all duration-200 cursor-pointer"
+          >
+            <Heart size={16} aria-hidden="true" />
+            Give
+          </Link>
         </div>
       </div>
     </header>
