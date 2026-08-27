@@ -9,7 +9,7 @@ export const siteSettings = defineType({
       name: 'churchName',
       title: 'Church Name',
       type: 'string',
-      initialValue: 'New Life In God\'s World — Carmen',
+      initialValue: 'New Life In God\'s Word — Carmen',
     }),
     defineField({
       name: 'tagline',

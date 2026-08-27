@@ -18,14 +18,14 @@ const inter = Inter({
 
 export const metadata: Metadata = {
   title: {
-    default: 'NLIGW Carmen — New Life In God\'s World',
+    default: 'NLIGW Carmen — New Life In God\'s Word',
     template: '%s | NLIGW Carmen',
   },
   description:
     'A warm, welcoming Christian community in Carmen, Davao del Norte, Philippines dedicated to faith, hope, spiritual growth, and outreach. Join us for Sunday worship services.',
   keywords: [
     'NLIGW',
-    'New Life In God\'s World',
+    'New Life In God\'s Word',
     'Carmen',
     'Davao del Norte',
     'Ising',
@@ -39,9 +39,14 @@ export const metadata: Metadata = {
     locale: 'en_PH',
     url: 'https://nligwcarmen.com',
     siteName: 'NLIGW Carmen',
-    title: 'NLIGW Carmen — New Life In God\'s World',
+    title: 'NLIGW Carmen — New Life In God\'s Word',
     description:
       'A warm, welcoming Christian community in Carmen, Davao del Norte, Philippines dedicated to faith, hope, spiritual growth, and outreach.',
+  },
+  icons: {
+    icon: '/logo.png',
+    shortcut: '/logo.png',
+    apple: '/logo.png',
   },
   metadataBase: new URL('https://nligwcarmen.com'),
 }

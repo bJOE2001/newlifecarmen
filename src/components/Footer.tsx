@@ -134,7 +134,7 @@ export default function Footer() {
       <div className="border-t border-white/10">
         <div className="container-church py-5 flex flex-col sm:flex-row items-center justify-between gap-3">
           <p className="text-xs text-white/40">
-            © {currentYear} New Life In God&apos;s World — Carmen. All rights reserved.
+            © {currentYear} New Life In God&apos;s Word — Carmen. All rights reserved.
           </p>
           <p className="text-xs text-white/40 flex items-center gap-1">
             Built with <Heart size={12} className="text-emerald-light" aria-hidden="true" /> for His glory

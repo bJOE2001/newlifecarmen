@@ -196,7 +196,7 @@ export default function GivePage() {
                       </div>
                     </div>
                     <CopyableField label="Bank Name" value="BDO" copied={copied} onCopy={copyToClipboard} />
-                    <CopyableField label="Account Name" value="New Life In God's World Carmen" copied={copied} onCopy={copyToClipboard} />
+                    <CopyableField label="Account Name" value="New Life In God's Word Carmen" copied={copied} onCopy={copyToClipboard} />
                     <CopyableField label="Account Number" value="XXXX-XXXX-XXXX" copied={copied} onCopy={copyToClipboard} />
                   </div>
                 )}

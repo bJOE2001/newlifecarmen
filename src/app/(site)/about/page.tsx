@@ -163,7 +163,7 @@ export default async function AboutPage() {
           <SectionHeading title="Our Story" />
           <div className="prose prose-lg max-w-none text-text-body leading-relaxed space-y-4">
             <p>
-              New Life In God&apos;s World (NLIGW) in Carmen, Davao del Norte was birthed through prayer, passion for the Great Commission,
+              New Life In God&apos;s Word (NLIGW) in Carmen, Davao del Norte was birthed through prayer, passion for the Great Commission,
               and a hunger to see God&apos;s transforming power in our community.
             </p>
             <p>

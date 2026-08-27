@@ -152,7 +152,7 @@ export default function GivingModal({ isOpen, onClose }: GivingModalProps) {
               />
               <CopyableField
                 label="Account Name"
-                value="New Life In God's World Carmen"
+                value="New Life In God's Word Carmen"
                 copied={copied}
                 onCopy={copyToClipboard}
               />

@@ -2,20 +2,18 @@
 // This ensures the site renders beautifully on first deploy.
 
 export const fallbackSettings = {
-  churchName: 'New Life In God\'s World — Carmen',
+  churchName: 'New Life In God\'s Word — Carmen',
   tagline: 'A Christ-centered discipleship church in Carmen, Davao del Norte dedicated to winning souls and making disciples.',
   serviceTimes: [
-    { day: 'Sunday', time: '9:00 AM', label: 'Sunday Worship Celebration' },
-    { day: 'Sunday', time: '2:00 PM', label: 'Afternoon Prayer Meeting' },
-    { day: 'Wednesday', time: '7:00 PM', label: 'Midweek Bible Study & Life Groups' },
-    { day: 'Friday', time: '7:00 PM', label: 'Youth Fellowship Night' },
+    { day: 'Sunday', time: '8:00 AM', label: 'Sunday Worship Celebration' },
+    { day: 'Wednesday', time: '6:30 PM', label: 'Midweek Service' },
   ],
   address: 'Purok 14, Ising, Carmen, Davao del Norte, Philippines',
   facebookUrl: 'https://www.facebook.com/NLIGW.OFFICIALS',
   gcashNumber: '0917-XXX-XXXX',
   mayaNumber: '0917-XXX-XXXX',
   bankName: 'BDO',
-  bankAccountName: 'New Life In God\'s World Carmen',
+  bankAccountName: 'New Life In God\'s Word Carmen',
   bankAccountNumber: 'XXXX-XXXX-XXXX',
   contactNumbers: [
     { label: 'Church Office', number: '0917-XXX-XXXX' },
