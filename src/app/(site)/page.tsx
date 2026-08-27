@@ -128,7 +128,7 @@ export default async function HomePage() {
           {/* Trust Indicators */}
           <div className="flex items-center justify-center gap-8 mt-14 animate-fade-in" style={{ animationDelay: '0.4s' }}>
             <div className="text-center">
-              <p className="text-2xl font-heading font-bold text-white">10+</p>
+              <p className="text-2xl font-heading font-bold text-white">25+</p>
               <p className="text-xs text-white/50 mt-0.5">Years of Ministry</p>
             </div>
             <div className="w-px h-10 bg-white/10" />
