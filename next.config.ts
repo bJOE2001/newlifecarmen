@@ -28,6 +28,14 @@ const nextConfig: NextConfig = {
         destination: 'https://newlifesol.vercel.app/assets/:path*',
       },
       {
+        source: '/images/:path*',
+        destination: 'https://newlifesol.vercel.app/images/:path*',
+      },
+      {
+        source: '/icons.svg',
+        destination: 'https://newlifesol.vercel.app/icons.svg',
+      },
+      {
         source: '/sol/favicon.svg',
         destination: 'https://newlifesol.vercel.app/favicon.svg',
       },
