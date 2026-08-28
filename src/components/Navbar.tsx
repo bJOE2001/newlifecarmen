@@ -11,6 +11,7 @@ import {
   MapPin,
 } from 'lucide-react'
 import AnnouncementBar from './AnnouncementBar'
+import type { Announcement } from '@/types'
 
 const navLinks = [
   { label: 'Home', href: '/' },
@@ -20,7 +21,7 @@ const navLinks = [
   { label: 'Ministries', href: '/ministries' },
 ]
 
-export default function Navbar({ announcements = [] }: { announcements?: any[] }) {
+export default function Navbar({ announcements = [] }: { announcements?: Announcement[] }) {
   const [isOpen, setIsOpen] = useState(false)
   const [scrolled, setScrolled] = useState(false)
 
@@ -41,7 +42,7 @@ export default function Navbar({ announcements = [] }: { announcements?: any[] }
   }, [isOpen])
 
   return (
-    <header className="fixed top-0 left-0 right-0 z-50 transition-all duration-300">
+    <header className="sticky top-0 z-50 transition-all duration-300">
       {announcements.length > 0 && <AnnouncementBar announcements={announcements} />}
       <div
         className={`transition-all duration-300 ${

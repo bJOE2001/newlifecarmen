@@ -17,6 +17,7 @@ import SectionHeading from '@/components/SectionHeading'
 import { client } from '@/sanity/lib/client'
 import { urlForImage } from '@/sanity/lib/image'
 import { pastoralTeamQuery, siteSettingsQuery } from '@/sanity/lib/queries'
+import type { PastoralTeamMember } from '@/types'
 
 export const metadata: Metadata = {
   title: 'About Us — Vision & Mission',
@@ -286,7 +287,7 @@ export default async function AboutPage() {
                     : 'grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8 max-w-4xl mx-auto'
               }
             >
-              {team.map((member: { _id: string; name: string; title: string; bio?: string; photo?: any }) => {
+              {team.map((member: PastoralTeamMember) => {
                 const photoUrl = member.photo ? urlForImage(member.photo)?.url() : null
                 return (
                   <div key={member._id} className="text-center">

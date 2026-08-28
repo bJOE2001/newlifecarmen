@@ -3,6 +3,7 @@ import Image from 'next/image'
 import { MapPin, Phone, Clock, Heart } from 'lucide-react'
 import { client } from '@/sanity/lib/client'
 import { siteSettingsQuery } from '@/sanity/lib/queries'
+import type { SiteSettings } from '@/types'
 
 function FacebookIcon({ size = 18, className = '' }: { size?: number; className?: string }) {
   return (
@@ -14,7 +15,7 @@ function FacebookIcon({ size = 18, className = '' }: { size?: number; className?
 
 export default async function Footer() {
   const currentYear = new Date().getFullYear()
-  let settings: any = null
+  let settings: SiteSettings | null = null
   try {
     settings = await client.fetch(siteSettingsQuery)
   } catch {

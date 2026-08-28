@@ -23,6 +23,7 @@ import {
   ministriesQuery,
   siteSettingsQuery,
 } from '@/sanity/lib/queries'
+import type { Sermon, ChurchEvent, Ministry } from '@/types'
 
 async function getData() {
   try {
@@ -347,7 +348,7 @@ export default async function HomePage() {
                       : 'grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6'
                 }
               >
-                {ministries.slice(0, 6).map((ministry: { _id: string; name: string; leaderName?: string; description?: string; heroImage?: any }) => (
+                {ministries.slice(0, 6).map((ministry: Ministry) => (
                   <MinistryCard
                     key={ministry._id}
                     name={ministry.name}
@@ -397,7 +398,7 @@ export default async function HomePage() {
                       : 'grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 max-w-5xl mx-auto'
                 }
               >
-                {events.slice(0, 3).map((event: { _id: string; title: string; date: string; location?: string; description?: string; registrationLink?: string; coverImage?: any; eventPoster?: any }) => (
+                {events.slice(0, 3).map((event: ChurchEvent) => (
                   <EventCard
                     key={event._id}
                     title={event.title}

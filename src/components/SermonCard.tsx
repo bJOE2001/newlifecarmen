@@ -1,6 +1,7 @@
 import Image from 'next/image'
 import { BookOpen, Calendar, User } from 'lucide-react'
 import { urlForImage } from '@/sanity/lib/image'
+import type { SanityImage } from '@/types'
 
 interface SermonCardProps {
   title: string
@@ -9,7 +10,7 @@ interface SermonCardProps {
   date: string
   scriptureReferences?: string[]
   videoUrl?: string
-  coverImage?: any
+  coverImage?: SanityImage
 }
 
 export default function SermonCard({

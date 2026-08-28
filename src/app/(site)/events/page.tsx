@@ -5,6 +5,7 @@ import SectionHeading from '@/components/SectionHeading'
 import { client } from '@/sanity/lib/client'
 import { urlForImage } from '@/sanity/lib/image'
 import { eventsQuery, siteSettingsQuery } from '@/sanity/lib/queries'
+import type { ChurchEvent } from '@/types'
 
 export const metadata: Metadata = {
   title: 'Events',
@@ -85,7 +86,7 @@ export default async function EventsPage() {
                   : 'grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 max-w-5xl mx-auto'
             }
           >
-            {events.map((event: { _id: string; title: string; date: string; location?: string; description?: string; registrationLink?: string; coverImage?: any; eventPoster?: any }) => (
+            {events.map((event: ChurchEvent) => (
               <EventCard
                 key={event._id}
                 title={event.title}

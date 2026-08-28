@@ -1,12 +1,13 @@
 import Image from 'next/image'
 import { Users } from 'lucide-react'
 import { urlForImage } from '@/sanity/lib/image'
+import type { SanityImage } from '@/types'
 
 interface MinistryCardProps {
   name: string
   leaderName?: string
   description?: string
-  heroImage?: any
+  heroImage?: SanityImage
 }
 
 export default function MinistryCard({ name, leaderName, description, heroImage }: MinistryCardProps) {

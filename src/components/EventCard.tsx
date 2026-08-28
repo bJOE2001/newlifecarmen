@@ -1,6 +1,7 @@
 import Image from 'next/image'
 import { Calendar, MapPin, ExternalLink, Clock } from 'lucide-react'
 import { urlForImage } from '@/sanity/lib/image'
+import type { SanityImage } from '@/types'
 
 interface EventCardProps {
   title: string
@@ -8,8 +9,8 @@ interface EventCardProps {
   location?: string
   description?: string
   registrationLink?: string
-  coverImage?: any
-  eventPoster?: any
+  coverImage?: SanityImage
+  eventPoster?: SanityImage
 }
 
 export default function EventCard({

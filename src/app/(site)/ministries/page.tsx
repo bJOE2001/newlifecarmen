@@ -5,6 +5,7 @@ import SectionHeading from '@/components/SectionHeading'
 import { client } from '@/sanity/lib/client'
 import { urlForImage } from '@/sanity/lib/image'
 import { ministriesQuery, siteSettingsQuery } from '@/sanity/lib/queries'
+import type { Ministry } from '@/types'
 
 export const metadata: Metadata = {
   title: 'Ministries',
@@ -85,7 +86,7 @@ export default async function MinistriesPage() {
                   : 'grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6'
             }
           >
-            {ministries.map((ministry: { _id: string; name: string; leaderName?: string; description?: string; heroImage?: any }) => (
+            {ministries.map((ministry: Ministry) => (
               <MinistryCard
                 key={ministry._id}
                 name={ministry.name}

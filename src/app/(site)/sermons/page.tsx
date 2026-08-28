@@ -5,6 +5,7 @@ import SectionHeading from '@/components/SectionHeading'
 import { client } from '@/sanity/lib/client'
 import { urlForImage } from '@/sanity/lib/image'
 import { sermonsQuery, siteSettingsQuery } from '@/sanity/lib/queries'
+import type { Sermon } from '@/types'
 
 export const metadata: Metadata = {
   title: 'Sermons',
@@ -100,7 +101,7 @@ export default async function SermonsPage() {
                   : 'grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6'
             }
           >
-            {sermons.map((sermon: { _id: string; title: string; speaker: string; series?: string; date: string; videoUrl?: string; scriptureReferences?: string[]; coverImage?: any }) => (
+            {sermons.map((sermon: Sermon) => (
               <SermonCard
                 key={sermon._id}
                 title={sermon.title}
