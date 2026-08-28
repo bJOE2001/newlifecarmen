@@ -274,18 +274,31 @@ export default async function HomePage() {
             <div className="max-w-3xl mx-auto">
               <div className="bg-white rounded-2xl border border-border shadow-sm overflow-hidden">
                 {/* Sermon Cover */}
-                <div className="h-52 md:h-64 bg-gradient-to-br from-navy via-navy-light to-navy-700 relative">
-                  <div className="absolute inset-0 bg-gradient-to-t from-navy/80 to-transparent" />
-                  <div className="absolute bottom-6 left-6 right-6">
+                <div className="h-52 md:h-64 bg-gradient-to-br from-navy via-navy-light to-navy-700 relative overflow-hidden">
+                  {latestSermon.coverImage ? (
+                    <>
+                      <Image
+                        src={urlForImage(latestSermon.coverImage)?.url() || ''}
+                        alt={latestSermon.title}
+                        fill
+                        sizes="(max-width: 768px) 100vw, 768px"
+                        className="object-cover object-center"
+                      />
+                      <div className="absolute inset-0 bg-gradient-to-t from-navy/95 via-navy/50 to-black/30" />
+                    </>
+                  ) : (
+                    <div className="absolute inset-0 bg-gradient-to-t from-navy/80 to-transparent" />
+                  )}
+                  <div className="absolute bottom-6 left-6 right-6 z-10">
                     {latestSermon.series && (
-                      <span className="inline-block px-3 py-1 bg-emerald/90 text-white text-xs font-semibold uppercase tracking-wider rounded-md mb-3">
+                      <span className="inline-block px-3 py-1 bg-emerald/90 text-white text-xs font-semibold uppercase tracking-wider rounded-md mb-3 shadow-sm">
                         {latestSermon.series}
                       </span>
                     )}
-                    <h3 className="text-2xl md:text-3xl font-heading font-bold text-white">
+                    <h3 className="text-2xl md:text-3xl font-heading font-bold text-white drop-shadow-sm">
                       {latestSermon.title}
                     </h3>
-                    <p className="text-white/60 mt-2 text-sm">
+                    <p className="text-white/80 mt-2 text-sm">
                       {latestSermon.speaker} · {new Date(latestSermon.date).toLocaleDateString('en-US', { month: 'long', day: 'numeric', year: 'numeric' })}
                     </p>
                   </div>
@@ -325,15 +338,22 @@ export default async function HomePage() {
 
           {ministries.length > 0 ? (
             <>
-              <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
-                {ministries.slice(0, 6).map((ministry: { _id: string; name: string; category: string; leaderName?: string; meetingSchedule?: string; description?: string }) => (
+              <div
+                className={
+                  ministries.length === 1
+                    ? 'max-w-md mx-auto'
+                    : ministries.length === 2
+                      ? 'grid grid-cols-1 sm:grid-cols-2 gap-6 max-w-3xl mx-auto'
+                      : 'grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6'
+                }
+              >
+                {ministries.slice(0, 6).map((ministry: { _id: string; name: string; leaderName?: string; description?: string; heroImage?: any }) => (
                   <MinistryCard
                     key={ministry._id}
                     name={ministry.name}
-                    category={ministry.category}
                     leaderName={ministry.leaderName}
-                    meetingSchedule={ministry.meetingSchedule}
                     description={ministry.description}
+                    heroImage={ministry.heroImage}
                   />
                 ))}
               </div>
@@ -368,8 +388,16 @@ export default async function HomePage() {
 
           {events.length > 0 ? (
             <>
-              <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 max-w-5xl mx-auto">
-                {events.slice(0, 3).map((event: { _id: string; title: string; date: string; location?: string; description?: string; registrationLink?: string }) => (
+              <div
+                className={
+                  events.length === 1
+                    ? 'max-w-md mx-auto'
+                    : events.length === 2
+                      ? 'grid grid-cols-1 md:grid-cols-2 gap-6 max-w-3xl mx-auto'
+                      : 'grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 max-w-5xl mx-auto'
+                }
+              >
+                {events.slice(0, 3).map((event: { _id: string; title: string; date: string; location?: string; description?: string; registrationLink?: string; coverImage?: any; eventPoster?: any }) => (
                   <EventCard
                     key={event._id}
                     title={event.title}
@@ -377,6 +405,8 @@ export default async function HomePage() {
                     location={event.location}
                     description={event.description}
                     registrationLink={event.registrationLink}
+                    coverImage={event.coverImage}
+                    eventPoster={event.eventPoster}
                   />
                 ))}
               </div>

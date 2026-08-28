@@ -8,7 +8,7 @@ import { ministriesQuery, siteSettingsQuery } from '@/sanity/lib/queries'
 
 export const metadata: Metadata = {
   title: 'Ministries',
-  description: 'Explore the ministries of NLIGW Carmen — Kingdom Kids, Youth, Life Groups, Men, Women, and Worship Team.',
+  description: 'Explore the ministries of NLIGW Carmen — Kids, Youth, Men, Women, Media, and Worship Team.',
 }
 
 async function getData() {
@@ -76,15 +76,22 @@ export default async function MinistriesPage() {
             subtitle="Each ministry is an opportunity to grow, serve, and connect with others"
           />
 
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
-            {ministries.map((ministry: { _id: string; name: string; category: string; leaderName?: string; meetingSchedule?: string; description?: string }) => (
+          <div
+            className={
+              ministries.length === 1
+                ? 'max-w-md mx-auto'
+                : ministries.length === 2
+                  ? 'grid grid-cols-1 sm:grid-cols-2 gap-6 max-w-3xl mx-auto'
+                  : 'grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6'
+            }
+          >
+            {ministries.map((ministry: { _id: string; name: string; leaderName?: string; description?: string; heroImage?: any }) => (
               <MinistryCard
                 key={ministry._id}
                 name={ministry.name}
-                category={ministry.category}
                 leaderName={ministry.leaderName}
-                meetingSchedule={ministry.meetingSchedule}
                 description={ministry.description}
+                heroImage={ministry.heroImage}
               />
             ))}
           </div>

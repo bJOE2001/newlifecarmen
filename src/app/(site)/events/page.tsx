@@ -76,8 +76,16 @@ export default async function EventsPage() {
             subtitle="Don't miss what God is doing in our community"
           />
 
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 max-w-5xl mx-auto">
-            {events.map((event: { _id: string; title: string; date: string; location?: string; description?: string; registrationLink?: string }) => (
+          <div
+            className={
+              events.length === 1
+                ? 'max-w-md mx-auto'
+                : events.length === 2
+                  ? 'grid grid-cols-1 md:grid-cols-2 gap-6 max-w-3xl mx-auto'
+                  : 'grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 max-w-5xl mx-auto'
+            }
+          >
+            {events.map((event: { _id: string; title: string; date: string; location?: string; description?: string; registrationLink?: string; coverImage?: any; eventPoster?: any }) => (
               <EventCard
                 key={event._id}
                 title={event.title}
@@ -85,6 +93,8 @@ export default async function EventsPage() {
                 location={event.location}
                 description={event.description}
                 registrationLink={event.registrationLink}
+                coverImage={event.coverImage}
+                eventPoster={event.eventPoster}
               />
             ))}
           </div>

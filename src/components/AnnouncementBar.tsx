@@ -40,7 +40,7 @@ export default function AnnouncementBar({ announcements }: { announcements: Anno
 
   return (
     <div className={`${style.bg} ${style.text} relative`} role="alert">
-      <div className="container-church py-2.5 pr-10 flex items-center gap-2 text-sm">
+      <div className="container-church py-2.5 px-12 flex items-center justify-center gap-2 text-sm text-center font-medium">
         <Icon size={16} className="shrink-0" aria-hidden="true" />
         {current.link ? (
           <a

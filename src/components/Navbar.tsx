@@ -10,6 +10,7 @@ import {
   Heart,
   MapPin,
 } from 'lucide-react'
+import AnnouncementBar from './AnnouncementBar'
 
 const navLinks = [
   { label: 'Home', href: '/' },
@@ -19,7 +20,7 @@ const navLinks = [
   { label: 'Ministries', href: '/ministries' },
 ]
 
-export default function Navbar() {
+export default function Navbar({ announcements = [] }: { announcements?: any[] }) {
   const [isOpen, setIsOpen] = useState(false)
   const [scrolled, setScrolled] = useState(false)
 
@@ -40,14 +41,16 @@ export default function Navbar() {
   }, [isOpen])
 
   return (
-    <header
-      className={`fixed top-0 left-0 right-0 z-50 transition-all duration-300 ${
-        scrolled
-          ? 'bg-white/95 backdrop-blur-md shadow-lg shadow-navy/5'
-          : 'bg-white/80 backdrop-blur-sm'
-      }`}
-    >
-      <nav className="container-church flex items-center justify-between h-16 md:h-18">
+    <header className="fixed top-0 left-0 right-0 z-50 transition-all duration-300">
+      {announcements.length > 0 && <AnnouncementBar announcements={announcements} />}
+      <div
+        className={`transition-all duration-300 ${
+          scrolled
+            ? 'bg-white/95 backdrop-blur-md shadow-lg shadow-navy/5'
+            : 'bg-white/90 backdrop-blur-sm border-b border-navy/5'
+        }`}
+      >
+        <nav className="container-church flex items-center justify-between h-16 md:h-18">
         {/* Logo */}
         <Link href="/" className="flex items-center gap-3 group" aria-label="NLIGW Carmen - Home">
           <div className="relative w-10 h-10 rounded-full overflow-hidden shrink-0 shadow-sm border border-navy/10 group-hover:scale-105 transition-transform duration-200">
@@ -107,6 +110,7 @@ export default function Navbar() {
           {isOpen ? <X size={22} /> : <Menu size={22} />}
         </button>
       </nav>
+      </div>
 
       {/* Mobile Menu Panel */}
       <div

@@ -35,11 +35,11 @@ const faqs = [
   },
   {
     q: 'How long is the service?',
-    a: 'Our Sunday Worship Service typically lasts about 1.5 to 2 hours, including praise & worship and the sermon message.',
+    a: 'Our Sunday Worship Service typically lasts about 2 to 3 hours, including praise & worship and the sermon message.',
   },
   {
     q: 'Is there a program for my kids?',
-    a: 'Yes! Our Kingdom Kids ministry provides fun, safe, and age-appropriate Bible lessons for children every Sunday. Kids are always welcome in the main service too.',
+    a: 'Yes! Our Kids ministry provides fun, safe, and age-appropriate Bible lessons for children every Sunday. Kids are always welcome in the main service too.',
   },
   {
     q: 'Do I need to bring anything?',
@@ -81,7 +81,15 @@ export default async function PlanYourVisitPage() {
       <section className="section-padding bg-white">
         <div className="container-church">
           <SectionHeading title="Service Times" subtitle="Join us for worship, prayer, and fellowship" />
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-5 max-w-4xl mx-auto">
+          <div
+            className={
+              serviceTimes.length === 1
+                ? 'max-w-sm mx-auto'
+                : serviceTimes.length === 2
+                  ? 'grid grid-cols-1 sm:grid-cols-2 gap-6 max-w-2xl mx-auto'
+                  : 'grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 max-w-4xl mx-auto'
+            }
+          >
             {serviceTimes.map((service: { day?: string; time?: string; label?: string }, i: number) => {
               const isPrimary = i === 0
               return (

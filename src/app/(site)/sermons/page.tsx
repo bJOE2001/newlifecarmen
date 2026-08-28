@@ -91,8 +91,16 @@ export default async function SermonsPage() {
       {/* Sermons Grid */}
       <section className="section-padding bg-bg">
         <div className="container-church">
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
-            {sermons.map((sermon: { _id: string; title: string; speaker: string; series?: string; date: string; videoUrl?: string; scriptureReferences?: string[] }) => (
+          <div
+            className={
+              sermons.length === 1
+                ? 'max-w-md mx-auto'
+                : sermons.length === 2
+                  ? 'grid grid-cols-1 md:grid-cols-2 gap-6 max-w-3xl mx-auto'
+                  : 'grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6'
+            }
+          >
+            {sermons.map((sermon: { _id: string; title: string; speaker: string; series?: string; date: string; videoUrl?: string; scriptureReferences?: string[]; coverImage?: any }) => (
               <SermonCard
                 key={sermon._id}
                 title={sermon.title}
@@ -101,6 +109,7 @@ export default async function SermonsPage() {
                 date={sermon.date}
                 videoUrl={sermon.videoUrl}
                 scriptureReferences={sermon.scriptureReferences}
+                coverImage={sermon.coverImage}
               />
             ))}
           </div>

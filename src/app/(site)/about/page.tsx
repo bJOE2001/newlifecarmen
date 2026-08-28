@@ -45,8 +45,8 @@ const ladderOfSuccess = [
   {
     step: '01',
     phase: 'WIN',
-    subtitle: 'Manalo ng Kaluluwa',
-    desc: 'Reaching the lost through love, personal evangelism, Pre-Encounter, and inviting friends and family to weekly Life Groups.',
+    subtitle: 'Reach & Welcome',
+    desc: 'Sharing God’s love through genuine friendships, inviting friends to Life Groups, and welcoming everyone with open arms.',
     scripture: 'Matthew 28:19',
     icon: Flame,
     color: 'from-forest to-emerald-600',
@@ -54,8 +54,8 @@ const ladderOfSuccess = [
   {
     step: '02',
     phase: 'CONSOLIDATE',
-    subtitle: 'Magpatibay sa Pananampalataya',
-    desc: 'Caring for new believers through prayer, personal visits, and experiencing spiritual freedom and healing at the Encounter God Retreat Weekend.',
+    subtitle: 'Grow & Connect',
+    desc: 'Helping new friends find community, experience personal healing, and grow in confidence during our Encounter Weekend.',
     scripture: 'John 15:16',
     icon: UserCheck,
     color: 'from-forest-dark to-forest',
@@ -63,8 +63,8 @@ const ladderOfSuccess = [
   {
     step: '03',
     phase: 'DISCIPLE',
-    subtitle: 'Mag-ensayo at Magturo',
-    desc: 'Equipping every believer through the School of Leaders (SOL 1, 2, 3) to develop Christlike character, sound doctrine, and leadership skills.',
+    subtitle: 'Learn & Lead',
+    desc: 'Developing your character, faith, and practical life skills through our School of Leaders classes.',
     scripture: '2 Timothy 2:2',
     icon: GraduationCap,
     color: 'from-forest to-emerald-500',
@@ -72,8 +72,8 @@ const ladderOfSuccess = [
   {
     step: '04',
     phase: 'SEND',
-    subtitle: 'Magpadala ng mga Lider',
-    desc: 'Empowering trained leaders to open new Life Groups, raise disciples, and multiply the Kingdom of God across Carmen.',
+    subtitle: 'Serve & Multiply',
+    desc: 'Empowering you to start your own Life Group, mentor others, and bring positive change to your neighborhood.',
     scripture: 'Mark 16:15',
     icon: Send,
     color: 'from-forest-dark to-teal-700',
@@ -83,32 +83,32 @@ const ladderOfSuccess = [
 const beliefs = [
   {
     title: 'The Bible',
-    desc: 'We believe the Bible is the inspired, infallible Word of God — our ultimate authority for faith, discipleship, and life.',
+    desc: 'We believe the Bible is God’s guide for life—full of practical wisdom, truth, and hope for our daily living.',
     icon: BookOpen,
   },
   {
-    title: 'God',
-    desc: 'We believe in one God, eternally existing in three persons: Father, Son, and Holy Spirit.',
+    title: 'God’s Love',
+    desc: 'We believe in one loving God who created us, cares about our lives, and desires a personal relationship with each of us.',
     icon: Heart,
   },
   {
     title: 'Jesus Christ',
-    desc: 'We believe in the deity of Jesus Christ, His virgin birth, sinless life, atoning death on the cross, and bodily resurrection.',
+    desc: 'We believe Jesus showed us what God is like through His life, love, death on the cross, and resurrection.',
     icon: Target,
   },
   {
-    title: 'Salvation by Grace',
-    desc: 'We believe salvation is a gift of God received through personal faith in Jesus Christ alone, not by human works.',
+    title: 'Grace & Forgiveness',
+    desc: 'We believe forgiveness is a free gift from God through faith in Jesus, giving everyone a fresh start.',
     icon: Award,
   },
   {
-    title: 'The Holy Spirit & Power',
-    desc: 'We believe in the baptism and empowerment of the Holy Spirit for effective witness, holiness, and supernatural ministry.',
+    title: 'The Holy Spirit',
+    desc: 'We believe God’s Spirit lives in us today, bringing comfort, guidance, and strength to live with purpose.',
     icon: Sparkles,
   },
   {
-    title: 'Discipleship & The Church',
-    desc: 'We believe the Church is called to make disciples of all nations by following Jesus\' model of intentional relationship, mentoring, and multiplication.',
+    title: 'Community & Church',
+    desc: 'We believe life is meant to be shared in a warm community where we love, encourage, and serve one another.',
     icon: Users,
   },
 ]
@@ -145,13 +145,13 @@ export default async function AboutPage() {
         <div className="relative container-church py-24 md:py-32 text-center">
           <div className="inline-flex items-center gap-2 px-4 py-2 bg-black/30 backdrop-blur-md border border-white/20 rounded-full mb-6 animate-fade-in">
             <Sparkles size={14} className="text-white/80" aria-hidden="true" />
-            <span className="text-sm text-white/90">Winning Souls · Making Disciples</span>
+            <span className="text-sm text-white/90">Love God · Love People</span>
           </div>
           <h1 className="text-4xl md:text-5xl lg:text-6xl font-heading font-extrabold text-white mb-4 drop-shadow-xl animate-slide-up">
             {settings?.churchName ? `About ${settings.churchName}` : 'About NLIGW Carmen'}
           </h1>
           <p className="text-lg text-white/90 max-w-2xl mx-auto drop-shadow-md animate-slide-up" style={{ animationDelay: '0.1s' }}>
-            {settings?.tagline || 'A vibrant discipleship church committed to Jesus Christ, raising leaders of integrity, and transforming lives in Carmen, Davao del Norte.'}
+            {settings?.tagline || 'A welcoming Christian family in Carmen, Davao del Norte where you can find genuine friendships, grow in faith, and discover your purpose.'}
           </p>
         </div>
       </section>
@@ -159,19 +159,16 @@ export default async function AboutPage() {
       {/* Our Story */}
       <section className="section-padding bg-white">
         <div className="container-church max-w-3xl">
-          <SectionHeading title="Our Story" />
+          <SectionHeading title="Our Story" subtitle="How our church family began in Carmen" />
           <div className="prose prose-lg max-w-none text-text-body leading-relaxed space-y-4">
             <p>
-              New Life In God&apos;s Word (NLIGW) in Carmen, Davao del Norte was birthed through prayer, passion for the Great Commission,
-              and a hunger to see God&apos;s transforming power in our community.
+              New Life in God&apos;s Word (NLIGW Carmen) started with a simple vision: to love God, love people, and bring hope to our community in Carmen, Davao del Norte.
             </p>
             <p>
-              Embracing Jesus&apos; proven model of intentional discipleship and mentoring, NLIGW Carmen has grown
-              from a small gathering into a fruitful network of Life Groups meeting in homes, schools, workplaces, and barangays across Carmen.
+              Over the years, our church has grown from a small gathering into a thriving family of Life Groups. We meet in homes, schools, and neighborhoods throughout Carmen to share life, build genuine friendships, and support one another.
             </p>
             <p>
-              Our heartbeat is simple: **Every believer a leader, every home a cell group.** We are committed to walking with you from your first step
-              of faith, through the life-changing Encounter God Weekend, into the School of Leaders (SOL), and onto your God-given destiny.
+              Our goal is simple: <strong className="text-navy font-bold">help every person discover their God-given purpose.</strong> From your very first visit to becoming a confident leader in your family and community, we are here to walk with you every step of the way.
             </p>
           </div>
         </div>
@@ -187,8 +184,7 @@ export default async function AboutPage() {
               </div>
               <h2 className="text-2xl font-heading font-bold text-navy mb-3">Our Vision</h2>
               <p className="text-text-body leading-relaxed">
-                To win souls and make disciples, raising leaders of character who govern their lives,
-                strengthen families, and establish God&apos;s Kingdom in Carmen, Davao del Norte, and to the ends of the earth.
+                To share God&apos;s love with everyone in Carmen, build strong families, and raise compassionate leaders who make a positive difference in the world.
               </p>
             </div>
             <div className="bg-white p-8 rounded-2xl border border-border shadow-sm">
@@ -197,8 +193,7 @@ export default async function AboutPage() {
               </div>
               <h2 className="text-2xl font-heading font-bold text-navy mb-3">Our Mission</h2>
               <p className="text-text-body leading-relaxed">
-                To love God and people wholeheartedly by leading every believer through the **Ladder of Success** — 
-                **Winning** the lost, **Consolidating** new believers, **Discipling** through the School of Leaders (SOL), and **Sending** leaders to multiply.
+                To help people know Jesus, grow in faith through practical Bible teaching, and empower everyone to use their gifts to help others.
               </p>
             </div>
           </div>
@@ -282,7 +277,15 @@ export default async function AboutPage() {
             subtitle="The shepherds and ministry leaders guiding our church family in Carmen"
           />
           {team.length > 0 ? (
-            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8 max-w-4xl mx-auto">
+            <div
+              className={
+                team.length === 1
+                  ? 'max-w-md mx-auto'
+                  : team.length === 2
+                    ? 'grid grid-cols-1 sm:grid-cols-2 gap-8 max-w-2xl mx-auto'
+                    : 'grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8 max-w-4xl mx-auto'
+              }
+            >
               {team.map((member: { _id: string; name: string; title: string; bio?: string; photo?: any }) => {
                 const photoUrl = member.photo ? urlForImage(member.photo)?.url() : null
                 return (
