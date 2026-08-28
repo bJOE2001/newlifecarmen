@@ -15,11 +15,6 @@ import SectionHeading from '@/components/SectionHeading'
 import SermonCard from '@/components/SermonCard'
 import EventCard from '@/components/EventCard'
 import MinistryCard from '@/components/MinistryCard'
-import {
-  fallbackSermons,
-  fallbackEvents,
-  fallbackMinistries,
-} from '@/lib/fallback-data'
 import { client } from '@/sanity/lib/client'
 import { urlForImage } from '@/sanity/lib/image'
 import {
@@ -38,16 +33,16 @@ async function getData() {
       client.fetch(siteSettingsQuery),
     ])
     return {
-      sermons: sermons?.length ? sermons : fallbackSermons,
-      events: events?.length ? events : fallbackEvents,
-      ministries: ministries?.length ? ministries : fallbackMinistries,
+      sermons: sermons || [],
+      events: events || [],
+      ministries: ministries || [],
       settings: settings || null,
     }
   } catch {
     return {
-      sermons: fallbackSermons,
-      events: fallbackEvents,
-      ministries: fallbackMinistries,
+      sermons: [],
+      events: [],
+      ministries: [],
       settings: null,
     }
   }
@@ -324,28 +319,36 @@ export default async function HomePage() {
             subtitle="Find your place in our church family through one of our vibrant ministries"
           />
 
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
-            {ministries.slice(0, 6).map((ministry: { _id: string; name: string; category: string; leaderName?: string; meetingSchedule?: string; description?: string }) => (
-              <MinistryCard
-                key={ministry._id}
-                name={ministry.name}
-                category={ministry.category}
-                leaderName={ministry.leaderName}
-                meetingSchedule={ministry.meetingSchedule}
-                description={ministry.description}
-              />
-            ))}
-          </div>
+          {ministries.length > 0 ? (
+            <>
+              <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
+                {ministries.slice(0, 6).map((ministry: { _id: string; name: string; category: string; leaderName?: string; meetingSchedule?: string; description?: string }) => (
+                  <MinistryCard
+                    key={ministry._id}
+                    name={ministry.name}
+                    category={ministry.category}
+                    leaderName={ministry.leaderName}
+                    meetingSchedule={ministry.meetingSchedule}
+                    description={ministry.description}
+                  />
+                ))}
+              </div>
 
-          <div className="text-center mt-10">
-            <Link
-              href="/ministries"
-              className="inline-flex items-center gap-2 px-6 py-3 text-sm font-semibold text-emerald hover:text-emerald-light transition-colors duration-200 cursor-pointer"
-            >
-              Explore all ministries
-              <ArrowRight size={16} aria-hidden="true" />
-            </Link>
-          </div>
+              <div className="text-center mt-10">
+                <Link
+                  href="/ministries"
+                  className="inline-flex items-center gap-2 px-6 py-3 text-sm font-semibold text-emerald hover:text-emerald-light transition-colors duration-200 cursor-pointer"
+                >
+                  Explore all ministries
+                  <ArrowRight size={16} aria-hidden="true" />
+                </Link>
+              </div>
+            </>
+          ) : (
+            <div className="text-center py-8">
+              <p className="text-text-muted text-base">Our ministry directory will be updated shortly.</p>
+            </div>
+          )}
         </div>
       </section>
 
@@ -359,28 +362,36 @@ export default async function HomePage() {
             subtitle="Don't miss what God is doing in our community"
           />
 
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 max-w-5xl mx-auto">
-            {events.slice(0, 3).map((event: { _id: string; title: string; date: string; location?: string; description?: string; registrationLink?: string }) => (
-              <EventCard
-                key={event._id}
-                title={event.title}
-                date={event.date}
-                location={event.location}
-                description={event.description}
-                registrationLink={event.registrationLink}
-              />
-            ))}
-          </div>
+          {events.length > 0 ? (
+            <>
+              <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 max-w-5xl mx-auto">
+                {events.slice(0, 3).map((event: { _id: string; title: string; date: string; location?: string; description?: string; registrationLink?: string }) => (
+                  <EventCard
+                    key={event._id}
+                    title={event.title}
+                    date={event.date}
+                    location={event.location}
+                    description={event.description}
+                    registrationLink={event.registrationLink}
+                  />
+                ))}
+              </div>
 
-          <div className="text-center mt-10">
-            <Link
-              href="/events"
-              className="inline-flex items-center gap-2 px-6 py-3 text-sm font-semibold text-navy border-2 border-navy/15 rounded-xl hover:bg-navy/5 transition-all duration-200 cursor-pointer"
-            >
-              View All Events
-              <ArrowRight size={16} aria-hidden="true" />
-            </Link>
-          </div>
+              <div className="text-center mt-10">
+                <Link
+                  href="/events"
+                  className="inline-flex items-center gap-2 px-6 py-3 text-sm font-semibold text-navy border-2 border-navy/15 rounded-xl hover:bg-navy/5 transition-all duration-200 cursor-pointer"
+                >
+                  View All Events
+                  <ArrowRight size={16} aria-hidden="true" />
+                </Link>
+              </div>
+            </>
+          ) : (
+            <div className="text-center py-8">
+              <p className="text-text-muted text-base">Check back soon for upcoming events and activities!</p>
+            </div>
+          )}
         </div>
       </section>
 

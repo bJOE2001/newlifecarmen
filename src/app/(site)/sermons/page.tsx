@@ -5,7 +5,6 @@ import SectionHeading from '@/components/SectionHeading'
 import { client } from '@/sanity/lib/client'
 import { urlForImage } from '@/sanity/lib/image'
 import { sermonsQuery, siteSettingsQuery } from '@/sanity/lib/queries'
-import { fallbackSermons } from '@/lib/fallback-data'
 
 export const metadata: Metadata = {
   title: 'Sermons',
@@ -19,12 +18,12 @@ async function getData() {
       client.fetch(siteSettingsQuery),
     ])
     return {
-      sermons: sermons?.length ? sermons : fallbackSermons,
+      sermons: sermons || [],
       settings: settings || null,
     }
   } catch {
     return {
-      sermons: fallbackSermons,
+      sermons: [],
       settings: null,
     }
   }

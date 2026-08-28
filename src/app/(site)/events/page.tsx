@@ -5,7 +5,6 @@ import SectionHeading from '@/components/SectionHeading'
 import { client } from '@/sanity/lib/client'
 import { urlForImage } from '@/sanity/lib/image'
 import { eventsQuery, siteSettingsQuery } from '@/sanity/lib/queries'
-import { fallbackEvents } from '@/lib/fallback-data'
 
 export const metadata: Metadata = {
   title: 'Events',
@@ -19,12 +18,12 @@ async function getData() {
       client.fetch(siteSettingsQuery),
     ])
     return {
-      events: events?.length ? events : fallbackEvents,
+      events: events || [],
       settings: settings || null,
     }
   } catch {
     return {
-      events: fallbackEvents,
+      events: [],
       settings: null,
     }
   }

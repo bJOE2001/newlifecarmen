@@ -17,7 +17,6 @@ import SectionHeading from '@/components/SectionHeading'
 import { client } from '@/sanity/lib/client'
 import { urlForImage } from '@/sanity/lib/image'
 import { pastoralTeamQuery, siteSettingsQuery } from '@/sanity/lib/queries'
-import { fallbackPastoralTeam } from '@/lib/fallback-data'
 
 export const metadata: Metadata = {
   title: 'About Us — Vision & Mission',
@@ -31,12 +30,12 @@ async function getData() {
       client.fetch(siteSettingsQuery),
     ])
     return {
-      team: team?.length ? team : fallbackPastoralTeam,
+      team: team || [],
       settings: settings || null,
     }
   } catch {
     return {
-      team: fallbackPastoralTeam,
+      team: [],
       settings: null,
     }
   }
@@ -282,23 +281,43 @@ export default async function AboutPage() {
             title="Our Pastoral Team"
             subtitle="The shepherds and ministry leaders guiding our church family in Carmen"
           />
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8 max-w-4xl mx-auto">
-            {team.map((member: { _id: string; name: string; title: string; bio?: string; photo?: unknown }) => (
-              <div key={member._id} className="text-center">
-                {/* Photo placeholder */}
-                <div className="w-32 h-32 rounded-full bg-gradient-to-br from-navy to-navy-light mx-auto mb-4 flex items-center justify-center shadow-lg border-2 border-forest/20">
-                  <span className="text-3xl font-heading font-bold text-white">
-                    {member.name.split(' ').map((n: string) => n[0]).join('')}
-                  </span>
-                </div>
-                <h3 className="font-heading font-bold text-navy text-lg">{member.name}</h3>
-                <p className="text-sm text-forest font-semibold mb-3">{member.title}</p>
-                {member.bio && (
-                  <p className="text-sm text-text-body leading-relaxed">{member.bio}</p>
-                )}
-              </div>
-            ))}
-          </div>
+          {team.length > 0 ? (
+            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8 max-w-4xl mx-auto">
+              {team.map((member: { _id: string; name: string; title: string; bio?: string; photo?: any }) => {
+                const photoUrl = member.photo ? urlForImage(member.photo)?.url() : null
+                return (
+                  <div key={member._id} className="text-center">
+                    {photoUrl ? (
+                      <div className="w-32 h-32 rounded-full overflow-hidden mx-auto mb-4 shadow-lg border-2 border-forest/20 relative">
+                        <Image
+                          src={photoUrl}
+                          alt={member.name}
+                          fill
+                          sizes="128px"
+                          className="object-cover object-center"
+                        />
+                      </div>
+                    ) : (
+                      <div className="w-32 h-32 rounded-full bg-gradient-to-br from-navy to-navy-light mx-auto mb-4 flex items-center justify-center shadow-lg border-2 border-forest/20">
+                        <span className="text-3xl font-heading font-bold text-white">
+                          {member.name.split(' ').map((n: string) => n[0]).join('')}
+                        </span>
+                      </div>
+                    )}
+                    <h3 className="font-heading font-bold text-navy text-lg">{member.name}</h3>
+                    <p className="text-sm text-forest font-semibold mb-3">{member.title}</p>
+                    {member.bio && (
+                      <p className="text-sm text-text-body leading-relaxed">{member.bio}</p>
+                    )}
+                  </div>
+                )
+              })}
+            </div>
+          ) : (
+            <div className="text-center py-12">
+              <p className="text-text-muted text-base">Leadership profiles will be updated shortly.</p>
+            </div>
+          )}
         </div>
       </section>
     </>
