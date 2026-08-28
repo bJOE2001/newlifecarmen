@@ -1,7 +1,7 @@
 import { groq } from 'next-sanity'
 
 export const siteSettingsQuery = groq`
-  *[_type == "siteSettings"][0]{
+  *[_type == "siteSettings"] | order(_updatedAt desc)[0]{
     churchName,
     tagline,
     heroImage,

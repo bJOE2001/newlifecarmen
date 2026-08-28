@@ -148,10 +148,10 @@ export default async function AboutPage() {
             <span className="text-sm text-white/90">Winning Souls · Making Disciples</span>
           </div>
           <h1 className="text-4xl md:text-5xl lg:text-6xl font-heading font-extrabold text-white mb-4 drop-shadow-xl animate-slide-up">
-            About NLIGW Carmen
+            {settings?.churchName ? `About ${settings.churchName}` : 'About NLIGW Carmen'}
           </h1>
           <p className="text-lg text-white/90 max-w-2xl mx-auto drop-shadow-md animate-slide-up" style={{ animationDelay: '0.1s' }}>
-            A vibrant discipleship church committed to Jesus Christ, raising leaders of integrity, and transforming lives in Carmen, Davao del Norte.
+            {settings?.tagline || 'A vibrant discipleship church committed to Jesus Christ, raising leaders of integrity, and transforming lives in Carmen, Davao del Norte.'}
           </p>
         </div>
       </section>

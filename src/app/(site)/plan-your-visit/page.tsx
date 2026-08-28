@@ -11,10 +11,21 @@ import {
   ArrowRight,
 } from 'lucide-react'
 import SectionHeading from '@/components/SectionHeading'
+import { client } from '@/sanity/lib/client'
+import { siteSettingsQuery } from '@/sanity/lib/queries'
 
 export const metadata: Metadata = {
   title: 'Plan Your Visit',
   description: 'Everything you need to know before visiting NLIGW Carmen — service times, what to expect, kids ministry, parking, and directions.',
+}
+
+async function getData() {
+  try {
+    const settings = await client.fetch(siteSettingsQuery)
+    return settings || null
+  } catch {
+    return null
+  }
 }
 
 const faqs = [
@@ -40,7 +51,15 @@ const faqs = [
   },
 ]
 
-export default function PlanYourVisitPage() {
+export default async function PlanYourVisitPage() {
+  const settings = await getData()
+  const serviceTimes = settings?.serviceTimes?.length
+    ? settings.serviceTimes
+    : [
+        { day: 'Sunday', time: '8:00 AM', label: 'Sunday Worship Celebration', primary: true },
+        { day: 'Wednesday', time: '6:30 PM', label: 'Midweek Service', primary: false },
+      ]
+
   return (
     <>
       {/* Hero */}
@@ -61,33 +80,31 @@ export default function PlanYourVisitPage() {
       {/* Service Times */}
       <section className="section-padding bg-white">
         <div className="container-church">
-          <SectionHeading title="Service Times" />
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-5 max-w-4xl mx-auto">
-            {[
-              { day: 'Sunday', time: '9:00 AM', label: 'Worship Service', primary: true },
-              { day: 'Sunday', time: '2:00 PM', label: 'Prayer Meeting', primary: false },
-              { day: 'Wednesday', time: '7:00 PM', label: 'Bible Study', primary: false },
-              { day: 'Friday', time: '7:00 PM', label: 'Youth Night', primary: false },
-            ].map((service) => (
-              <div
-                key={service.label}
-                className={`relative p-6 rounded-2xl border text-center transition-all duration-300 ${
-                  service.primary
-                    ? 'bg-gradient-to-br from-navy to-navy-light border-navy text-white shadow-lg'
-                    : 'bg-bg border-border hover:border-emerald/40 hover:shadow-md'
-                }`}
-              >
-                {service.primary && (
-                  <span className="absolute -top-2.5 left-1/2 -translate-x-1/2 px-3 py-0.5 bg-emerald text-white text-[10px] font-bold uppercase tracking-wider rounded-full">
-                    Main Service
-                  </span>
-                )}
-                <Clock size={20} className={`mx-auto mb-3 ${service.primary ? 'text-emerald-light' : 'text-emerald'}`} aria-hidden="true" />
-                <p className={`text-sm font-medium ${service.primary ? 'text-white/60' : 'text-text-muted'}`}>{service.day}</p>
-                <p className={`text-2xl font-heading font-bold mt-1 ${service.primary ? 'text-white' : 'text-navy'}`}>{service.time}</p>
-                <p className={`text-sm mt-1 ${service.primary ? 'text-emerald-200' : 'text-text-body'}`}>{service.label}</p>
-              </div>
-            ))}
+          <SectionHeading title="Service Times" subtitle="Join us for worship, prayer, and fellowship" />
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-5 max-w-4xl mx-auto">
+            {serviceTimes.map((service: { day?: string; time?: string; label?: string }, i: number) => {
+              const isPrimary = i === 0
+              return (
+                <div
+                  key={i}
+                  className={`relative p-6 rounded-2xl border text-center transition-all duration-300 ${
+                    isPrimary
+                      ? 'bg-gradient-to-br from-navy to-navy-light border-navy text-white shadow-lg'
+                      : 'bg-bg border-border hover:border-emerald/40 hover:shadow-md'
+                  }`}
+                >
+                  {isPrimary && (
+                    <span className="absolute -top-2.5 left-1/2 -translate-x-1/2 px-3 py-0.5 bg-emerald text-white text-[10px] font-bold uppercase tracking-wider rounded-full">
+                      Main Service
+                    </span>
+                  )}
+                  <Clock size={20} className={`mx-auto mb-3 ${isPrimary ? 'text-emerald-light' : 'text-emerald'}`} aria-hidden="true" />
+                  <p className={`text-sm font-medium ${isPrimary ? 'text-white/60' : 'text-text-muted'}`}>{service.day || 'Weekly'}</p>
+                  <p className={`text-2xl font-heading font-bold mt-1 ${isPrimary ? 'text-white' : 'text-navy'}`}>{service.time}</p>
+                  <p className={`text-sm mt-1 ${isPrimary ? 'text-emerald-200' : 'text-text-body'}`}>{service.label || 'Worship'}</p>
+                </div>
+              )
+            })}
           </div>
         </div>
       </section>

@@ -1,81 +1,34 @@
-'use client'
-
-import { useState } from 'react'
+﻿import type { Metadata } from 'next'
 import {
   Heart,
-  Copy,
-  Check,
-  Smartphone,
-  Landmark,
-  QrCode,
   ShieldCheck,
   BookOpen,
 } from 'lucide-react'
 import SectionHeading from '@/components/SectionHeading'
+import GiveTabs from '@/components/GiveTabs'
+import { client } from '@/sanity/lib/client'
+import { urlForImage } from '@/sanity/lib/image'
+import { siteSettingsQuery } from '@/sanity/lib/queries'
 
-type TabId = 'gcash' | 'maya' | 'bank'
-
-const tabs: { id: TabId; label: string; icon: React.ComponentType<{ size?: number; className?: string }> }[] = [
-  { id: 'gcash', label: 'GCash', icon: Smartphone },
-  { id: 'maya', label: 'Maya', icon: QrCode },
-  { id: 'bank', label: 'Bank Transfer', icon: Landmark },
-]
-
-function CopyableField({
-  label,
-  value,
-  copied,
-  onCopy,
-}: {
-  label: string
-  value: string
-  copied: string | null
-  onCopy: (text: string, label: string) => void
-}) {
-  const isCopied = copied === label
-  return (
-    <div>
-      <p className="text-xs font-medium text-text-muted mb-1.5">{label}</p>
-      <div className="flex items-center gap-2">
-        <div className="flex-1 bg-bg rounded-lg px-4 py-3 border border-border">
-          <span className="text-base font-medium text-navy font-mono">{value}</span>
-        </div>
-        <button
-          onClick={() => onCopy(value, label)}
-          className={`px-4 py-3 rounded-lg text-sm font-medium transition-all duration-200 cursor-pointer ${
-            isCopied
-              ? 'bg-green-100 text-green-700'
-              : 'bg-navy/5 text-navy hover:bg-navy/10'
-          }`}
-          aria-label={`Copy ${label}`}
-        >
-          {isCopied ? (
-            <span className="flex items-center gap-1.5">
-              <Check size={16} aria-hidden="true" />
-              Copied!
-            </span>
-          ) : (
-            <span className="flex items-center gap-1.5">
-              <Copy size={16} aria-hidden="true" />
-              Copy
-            </span>
-          )}
-        </button>
-      </div>
-    </div>
-  )
+export const metadata: Metadata = {
+  title: 'Give — Tithes & Offerings',
+  description: 'Support the mission of NLIGW Carmen through safe and secure online giving via GCash, Maya, or Bank Transfer.',
 }
 
-export default function GivePage() {
-  const [activeTab, setActiveTab] = useState<TabId>('gcash')
-  const [copied, setCopied] = useState<string | null>(null)
-
-  const copyToClipboard = (text: string, label: string) => {
-    navigator.clipboard.writeText(text).then(() => {
-      setCopied(label)
-      setTimeout(() => setCopied(null), 2000)
-    })
+async function getData() {
+  try {
+    const settings = await client.fetch(siteSettingsQuery)
+    return settings || null
+  } catch {
+    return null
   }
+}
+
+export default async function GivePage() {
+  const settings = await getData()
+
+  const gcashQrUrl = settings?.gcashQR ? urlForImage(settings.gcashQR)?.url() : null
+  const mayaQrUrl = settings?.mayaQR ? urlForImage(settings.mayaQR)?.url() : null
 
   return (
     <>
@@ -122,96 +75,17 @@ export default function GivePage() {
             ))}
           </div>
 
-          {/* Giving Tabs Card */}
-          <div className="max-w-lg mx-auto">
-            <div className="bg-white rounded-2xl border border-border shadow-lg overflow-hidden">
-              {/* Tabs */}
-              <div className="flex border-b border-border">
-                {tabs.map((tab) => {
-                  const Icon = tab.icon
-                  return (
-                    <button
-                      key={tab.id}
-                      onClick={() => setActiveTab(tab.id)}
-                      className={`flex-1 flex items-center justify-center gap-2 px-4 py-4 text-sm font-medium transition-all duration-200 cursor-pointer ${
-                        activeTab === tab.id
-                          ? 'text-emerald border-b-2 border-emerald bg-emerald-50'
-                          : 'text-text-muted hover:text-navy hover:bg-gray-50'
-                      }`}
-                      role="tab"
-                      aria-selected={activeTab === tab.id}
-                    >
-                      <Icon size={18} aria-hidden="true" />
-                      {tab.label}
-                    </button>
-                  )
-                })}
-              </div>
-
-              {/* Tab Content */}
-              <div className="p-6">
-                {activeTab === 'gcash' && (
-                  <div className="space-y-5 animate-fade-in">
-                    <div className="bg-bg rounded-xl p-8 flex flex-col items-center">
-                      <div className="w-52 h-52 bg-white rounded-xl border-2 border-dashed border-border flex items-center justify-center">
-                        <div className="text-center">
-                          <QrCode size={48} className="text-text-muted mx-auto mb-2" aria-hidden="true" />
-                          <p className="text-sm text-text-muted font-medium">GCash QR Code</p>
-                          <p className="text-xs text-text-muted mt-1">Upload via Sanity CMS</p>
-                        </div>
-                      </div>
-                    </div>
-                    <CopyableField label="GCash Number" value="0917-XXX-XXXX" copied={copied} onCopy={copyToClipboard} />
-                    <CopyableField label="Account Name" value="NLIGW Carmen" copied={copied} onCopy={copyToClipboard} />
-                  </div>
-                )}
-
-                {activeTab === 'maya' && (
-                  <div className="space-y-5 animate-fade-in">
-                    <div className="bg-bg rounded-xl p-8 flex flex-col items-center">
-                      <div className="w-52 h-52 bg-white rounded-xl border-2 border-dashed border-border flex items-center justify-center">
-                        <div className="text-center">
-                          <QrCode size={48} className="text-text-muted mx-auto mb-2" aria-hidden="true" />
-                          <p className="text-sm text-text-muted font-medium">Maya QR Code</p>
-                          <p className="text-xs text-text-muted mt-1">Upload via Sanity CMS</p>
-                        </div>
-                      </div>
-                    </div>
-                    <CopyableField label="Maya Number" value="0917-XXX-XXXX" copied={copied} onCopy={copyToClipboard} />
-                    <CopyableField label="Account Name" value="NLIGW Carmen" copied={copied} onCopy={copyToClipboard} />
-                  </div>
-                )}
-
-                {activeTab === 'bank' && (
-                  <div className="space-y-5 animate-fade-in">
-                    <div className="bg-bg rounded-xl p-8">
-                      <div className="flex items-center gap-3">
-                        <div className="w-12 h-12 rounded-xl bg-navy/10 flex items-center justify-center">
-                          <Landmark size={24} className="text-navy" aria-hidden="true" />
-                        </div>
-                        <div>
-                          <p className="font-heading font-bold text-navy">Bank Transfer</p>
-                          <p className="text-sm text-text-muted">Direct bank deposit</p>
-                        </div>
-                      </div>
-                    </div>
-                    <CopyableField label="Bank Name" value="BDO" copied={copied} onCopy={copyToClipboard} />
-                    <CopyableField label="Account Name" value="New Life In God's Word Carmen" copied={copied} onCopy={copyToClipboard} />
-                    <CopyableField label="Account Number" value="XXXX-XXXX-XXXX" copied={copied} onCopy={copyToClipboard} />
-                  </div>
-                )}
-              </div>
-            </div>
-
-            {/* Security Note */}
-            <div className="mt-6 flex items-start gap-3 p-4 bg-emerald-50 border border-emerald-200 rounded-xl">
-              <ShieldCheck size={20} className="text-emerald-700 shrink-0 mt-0.5" aria-hidden="true" />
-              <div>
-                <p className="text-sm font-medium text-emerald-900">Your giving is safe and confidential</p>
-                <p className="text-xs text-emerald-700 mt-0.5">All giving details are managed securely. Keep your transaction receipt for your records.</p>
-              </div>
-            </div>
-          </div>
+          {/* Dynamic Giving Tabs Card */}
+          <GiveTabs
+            gcashNumber={settings?.gcashNumber || '0917-XXX-XXXX'}
+            gcashQrUrl={gcashQrUrl}
+            mayaNumber={settings?.mayaNumber || '0917-XXX-XXXX'}
+            mayaQrUrl={mayaQrUrl}
+            bankName={settings?.bankName || 'BDO'}
+            bankAccountName={settings?.bankAccountName || "New Life In God's Word Carmen"}
+            bankAccountNumber={settings?.bankAccountNumber || 'XXXX-XXXX-XXXX'}
+            churchName={settings?.churchName || "NLIGW Carmen"}
+          />
         </div>
       </section>
 

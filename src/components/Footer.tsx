@@ -1,6 +1,8 @@
 import Link from 'next/link'
 import Image from 'next/image'
 import { MapPin, Phone, Clock, Heart } from 'lucide-react'
+import { client } from '@/sanity/lib/client'
+import { siteSettingsQuery } from '@/sanity/lib/queries'
 
 function FacebookIcon({ size = 18, className = '' }: { size?: number; className?: string }) {
   return (
@@ -10,8 +12,28 @@ function FacebookIcon({ size = 18, className = '' }: { size?: number; className?
   )
 }
 
-export default function Footer() {
+export default async function Footer() {
   const currentYear = new Date().getFullYear()
+  let settings: any = null
+  try {
+    settings = await client.fetch(siteSettingsQuery)
+  } catch {
+    settings = null
+  }
+
+  const churchName = settings?.churchName || "New Life In God's Word — Carmen"
+  const tagline = settings?.tagline || 'A warm, welcoming Christian community in Carmen, Davao del Norte dedicated to faith, hope, spiritual growth, and outreach.'
+  const address = settings?.address || 'Purok 14, Ising, Carmen, Davao del Norte'
+  const facebookUrl = settings?.facebookUrl || 'https://www.facebook.com/NLIGW.OFFICIALS'
+  const serviceTimes = settings?.serviceTimes?.length
+    ? settings.serviceTimes
+    : [
+        { day: 'Sunday', time: '8:00 AM', label: 'Sunday Worship Celebration' },
+        { day: 'Wednesday', time: '6:30 PM', label: 'Midweek Service' },
+      ]
+  const contactNumbers = settings?.contactNumbers?.length
+    ? settings.contactNumbers
+    : [{ label: 'Facebook Page', number: 'Message Us Online' }]
 
   return (
     <footer className="bg-navy text-white/80">
@@ -24,26 +46,26 @@ export default function Footer() {
               <div className="relative w-10 h-10 rounded-full overflow-hidden shrink-0 shadow-sm border border-white/20 bg-white/10">
                 <Image
                   src="/logo.png"
-                  alt="NLIGW Carmen Church Logo"
+                  alt={`${churchName} Logo`}
                   fill
                   sizes="40px"
                   className="object-contain p-0.5"
                 />
               </div>
               <div>
-                <p className="font-heading font-bold text-white text-sm">NLIGW</p>
+                <p className="font-heading font-bold text-white text-sm">{churchName}</p>
                 <p className="text-[10px] text-white/50 tracking-wider uppercase font-semibold">Carmen, Davao del Norte</p>
               </div>
             </div>
             <p className="text-sm leading-relaxed text-white/60">
-              A warm, welcoming Christian community in Carmen, Davao del Norte dedicated to faith, hope, spiritual growth, and outreach.
+              {tagline}
             </p>
             <a
-              href="https://www.facebook.com/NLIGW.OFFICIALS"
+              href={facebookUrl}
               target="_blank"
               rel="noopener noreferrer"
               className="inline-flex items-center gap-2 text-sm text-emerald-light hover:text-emerald-200 transition-colors duration-200"
-              aria-label="Visit NLIGW Carmen Facebook page"
+              aria-label={`Visit ${churchName} Facebook page`}
             >
               <FacebookIcon size={18} />
               Follow us on Facebook
@@ -81,22 +103,12 @@ export default function Footer() {
               Service Times
             </h3>
             <ul className="space-y-3">
-              <li>
-                <p className="text-sm font-medium text-white">Sunday Worship</p>
-                <p className="text-sm text-white/50">9:00 AM</p>
-              </li>
-              <li>
-                <p className="text-sm font-medium text-white">Afternoon Prayer</p>
-                <p className="text-sm text-white/50">Sunday, 2:00 PM</p>
-              </li>
-              <li>
-                <p className="text-sm font-medium text-white">Midweek Bible Study</p>
-                <p className="text-sm text-white/50">Wednesday, 7:00 PM</p>
-              </li>
-              <li>
-                <p className="text-sm font-medium text-white">Youth Night</p>
-                <p className="text-sm text-white/50">Friday, 7:00 PM</p>
-              </li>
+              {serviceTimes.map((service: { day?: string; time?: string; label?: string }, i: number) => (
+                <li key={i}>
+                  <p className="text-sm font-medium text-white">{service.label || 'Worship'}</p>
+                  <p className="text-sm text-white/50">{[service.day, service.time].filter(Boolean).join(', ')}</p>
+                </li>
+              ))}
             </ul>
           </div>
 
@@ -106,12 +118,17 @@ export default function Footer() {
             <div className="space-y-3">
               <div className="flex items-start gap-2">
                 <MapPin size={16} className="text-emerald-light mt-0.5 shrink-0" aria-hidden="true" />
-                <p className="text-sm text-white/60">Purok 14, Ising, Carmen, Davao del Norte</p>
+                <p className="text-sm text-white/60">{address}</p>
               </div>
-              <div className="flex items-start gap-2">
-                <Phone size={16} className="text-emerald-light mt-0.5 shrink-0" aria-hidden="true" />
-                <p className="text-sm text-white/60">Contact the church office through our Facebook page</p>
-              </div>
+              {contactNumbers.map((contact: { label?: string; number?: string }, idx: number) => (
+                <div key={idx} className="flex items-start gap-2">
+                  <Phone size={16} className="text-emerald-light mt-0.5 shrink-0" aria-hidden="true" />
+                  <p className="text-sm text-white/60">
+                    <span className="font-medium text-white/80">{contact.label}: </span>
+                    {contact.number}
+                  </p>
+                </div>
+              ))}
             </div>
             {/* Google Maps Embed */}
             <div className="rounded-xl overflow-hidden border border-white/10 shadow-sm">
@@ -134,7 +151,7 @@ export default function Footer() {
       <div className="border-t border-white/10">
         <div className="container-church py-5 flex flex-col sm:flex-row items-center justify-between gap-3">
           <p className="text-xs text-white/40">
-            © {currentYear} New Life In God&apos;s Word — Carmen. All rights reserved.
+            © {currentYear} {churchName}. All rights reserved.
           </p>
           <p className="text-xs text-white/40 flex items-center gap-1">
             Built with <Heart size={12} className="text-emerald-light" aria-hidden="true" /> for His glory

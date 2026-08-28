@@ -87,16 +87,20 @@ export default async function HomePage() {
           {/* Service Times Badge */}
           <div className="inline-flex items-center gap-2 px-4 py-2 bg-black/30 backdrop-blur-md border border-white/20 rounded-full mb-8 animate-fade-in">
             <Clock size={14} className="text-white/80" aria-hidden="true" />
-            <span className="text-sm text-white/90">Sunday Worship Celebration — 8:00 AM</span>
+            <span className="text-sm text-white/90">
+              {settings?.serviceTimes?.[0]
+                ? `${settings.serviceTimes[0].label || 'Worship'} — ${settings.serviceTimes[0].time}`
+                : 'Sunday Worship Celebration — 8:00 AM'}
+            </span>
           </div>
 
           {/* Main Heading — Crisp Pure White for Maximum Readability */}
           <h1 className="text-4xl sm:text-5xl md:text-6xl lg:text-7xl font-heading font-extrabold text-white leading-[1.1] mb-6 drop-shadow-xl animate-slide-up">
-            Welcome to New Life
+            {settings?.churchName ? `Welcome to ${settings.churchName}` : 'Welcome to New Life'}
           </h1>
 
           <p className="text-lg md:text-xl text-white/90 max-w-2xl mx-auto mb-10 drop-shadow-md animate-slide-up" style={{ animationDelay: '0.1s' }}>
-            A Christ-centered discipleship church in Carmen, Davao del Norte dedicated to winning souls, making disciples, and raising leaders.
+            {settings?.tagline || 'A Christ-centered discipleship church in Carmen, Davao del Norte dedicated to winning souls, making disciples, and raising leaders.'}
           </p>
 
           {/* CTA Buttons — High Contrast */}
@@ -110,7 +114,7 @@ export default async function HomePage() {
               <ArrowRight size={16} aria-hidden="true" />
             </Link>
             <a
-              href="https://www.facebook.com/NLIGW.OFFICIALS"
+              href={settings?.facebookUrl || 'https://www.facebook.com/NLIGW.OFFICIALS'}
               target="_blank"
               rel="noopener noreferrer"
               className="inline-flex items-center gap-2 px-7 py-3.5 text-base font-semibold text-white bg-black/30 backdrop-blur-sm border-2 border-white/30 hover:border-white/60 hover:bg-white/10 rounded-xl transition-all duration-200 cursor-pointer"
